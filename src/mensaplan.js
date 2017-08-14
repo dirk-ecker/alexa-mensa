@@ -9,6 +9,8 @@ const mensa_url = 'http://www.studierendenwerk-aachen.de/speiseplaene/juelich-w.
 const dayOfWeekIds = [
     'montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag',
     'montagNaechste', 'dienstagNaechste', 'mittwochNaechste', 'donnerstagNaechste', 'freitagNaechste'];
+const supregexp = /<sup>.*?<\/sup>/g;
+const tagregexp = /<.*?>(.*?)<\/.*?>/g;
 
 let weekplan = undefined;
 
@@ -26,12 +28,12 @@ function init(callback) {
             const currentWeekday = dom.window.document.querySelector('#' + dayId);
             const currentMenueCategory = currentWeekday.querySelectorAll('.menue-category');
             currentMenueCategory.forEach(menueCategory => {
-                menueCategories.push(menueCategory.textContent.trim());
+                menueCategories.push(extractText(menueCategory.innerHTML));
             });
 
             const currentMenueDescription = currentWeekday.querySelectorAll('.menue-desc');
             currentMenueDescription.forEach(menueDescription => {
-                menueDescriptions.push(menueDescription.textContent.trim());
+                menueDescriptions.push(extractText(menueDescription.innerHTML));
             });
 
             const currentMenuePrice = currentWeekday.querySelectorAll('.menue-price');
@@ -53,7 +55,14 @@ function init(callback) {
     });
 }
 
-
+function extractText(innerHtml) {
+    innerHtml = innerHtml.trim();
+    //console.log(innerHtml);
+    innerHtml = innerHtml.replace(supregexp, '');
+    innerHtml = innerHtml.replace(tagregexp, '$1');
+    //console.log(innerHtml);
+    return innerHtml;
+}
 
 function lunchCard(date) {
     const dateParts = date.split('-');
