@@ -1,6 +1,4 @@
-GetResistorColorCoding Alexa frag widerstand von {resistor}
-GetResistorColorCoding Alexa frag widerstand {resistor}
-GetResistorColorCoding Alexa frag widerstand von {resistor} Ohm
-GetResistorColorCoding Alexa frag widerstand {resistor} Ohm
-GetResistorColorCoding Alexa frag widerstand für {resistor} Ohm
-GetResistorColorCoding Alexa frag widerstand für {resistor}
+GetLunchCard frag mensa jülich vom {date}
+GetLunchCard frag mensa jülich
+GetLunchCard frag mensa jülich am {date}
+GetLunchCard frag mensa jülich für {date}
