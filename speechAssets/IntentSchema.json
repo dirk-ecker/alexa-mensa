@@ -1,0 +1,57 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+    },
+    {
+      "name": "AMAZON.StopIntent",
+    },
+    {
+      "name": "GetResistorColorCoding",
+      "samples": [
+        "GetResistorColorCoding {resistor}",
+        "GetResistorColorCoding {resistor} Ohm",
+        "GetResistorColorCoding von {resistor}",
+        "GetResistorColorCoding von {resistor} Ohm",
+        "GetResistorColorCoding für {resistor}",
+        "GetResistorColorCoding für {resistor} Ohm",
+      ],
+      "slots": [
+        {
+          "name": "resistor",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+}
+
+{
+  "intents": [
+    {
+      "slots": [
+        {
+          "name": "date",
+          "type": "AMAZON.DATE"
+        }
+      ],
+      "intent": "GetCalendarWeek"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
+GetCalendarWeek Alexa frag Kalenderwoche
+GetCalendarWeek Alexa frag Kalenderwoche vom {date}
+GetCalendarWeek Alexa frag Kalenderwoche am {date}
+GetCalendarWeek Alexa frag Kalenderwoche für den {date}

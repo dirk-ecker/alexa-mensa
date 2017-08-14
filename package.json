@@ -1,0 +1,23 @@
+{
+  "name": "alexa-mensaplan",
+  "version": "1.0.0",
+  "description": "Gibt Auskunft über den Mensaplan der FH Jülich.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "alexa",
+    "mensaplan"
+  ],
+  "author": "Dirk Ecker",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.4.1"
+  },
+  "dependencies": {
+    "alexa-sdk": "^1.0.6",
+    "jsdom": "^11.1.0"
+  }
+}
