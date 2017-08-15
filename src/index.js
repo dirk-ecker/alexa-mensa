@@ -57,7 +57,7 @@ const handlers = {
             if (!result) {
                 speechOutput = this.t(NOT_FOUND_MESSAGE);
             } else {
-                speechOutput = this.t(createSpeechOutput(this, result));
+                speechOutput = createSpeechOutput(this, result);
             }
 
             this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), result.description);
