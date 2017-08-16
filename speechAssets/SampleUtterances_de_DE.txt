@@ -1,4 +1,3 @@
-GetLunchCard frag mensa jülich vom {date}
-GetLunchCard frag mensa jülich
-GetLunchCard frag mensa jülich am {date}
-GetLunchCard frag mensa jülich für {date}
+vom {date}
+am {date}
+für {date}
