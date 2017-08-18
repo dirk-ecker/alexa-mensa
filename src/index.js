@@ -55,12 +55,12 @@ const handlers = {
             let speechOutput;
             let result = mensaplan.lunchCard(dateValue);
             if (!result) {
-                speechOutput = this.t(NOT_FOUND_MESSAGE);
+                speechOutput = this.t('NOT_FOUND_MESSAGE');
             } else {
                 speechOutput = createSpeechOutput(this, result);
             }
 
-            this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), result.description);
+            this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), speechOutput);
 
         });
     },
