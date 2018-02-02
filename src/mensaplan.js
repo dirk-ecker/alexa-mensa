@@ -1,76 +1,18 @@
-const http = require('http');
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+const request = require('request');
 
 exports.lunchCard = lunchCard;
-exports.init = init;
 
-const mensa_url = 'http://www.studierendenwerk-aachen.de/speiseplaene/juelich-w.html';
-const dayOfWeekIds = [
-    'montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag',
-    'montagNaechste', 'dienstagNaechste', 'mittwochNaechste', 'donnerstagNaechste', 'freitagNaechste'];
-const supregexp = /<sup>.*?<\/sup>/g;
-const tagregexp = /<.*?>(.*?)<\/.*?>/g;
+const meals_url = 'http://openmensa.org/api/v2/canteens/100/days';
 
-let weekplan = undefined;
-
-function init(callback) {
-    weekplan = {};
-    JSDOM.fromURL(mensa_url).then(dom => {
-        dayOfWeekIds.forEach( dayId => {
-            const menueCategories = [];
-            const menueDescriptions = [];
-            const menuePrices = [];
-
-            const dayAnddate = dom.window.document.querySelector("[data-anchor='#" + dayId + "']").textContent.trim();
-            const date = dayAnddate.split(',')[1].trim();
-
-            const currentWeekday = dom.window.document.querySelector('#' + dayId);
-            const currentMenueCategory = currentWeekday.querySelectorAll('.menue-category');
-            currentMenueCategory.forEach(menueCategory => {
-                menueCategories.push(extractText(menueCategory.innerHTML));
-            });
-
-            const currentMenueDescription = currentWeekday.querySelectorAll('.menue-desc');
-            currentMenueDescription.forEach(menueDescription => {
-                menueDescriptions.push(extractText(menueDescription.innerHTML));
-            });
-
-            const currentMenuePrice = currentWeekday.querySelectorAll('.menue-price');
-            currentMenuePrice.forEach(menuePrice => {
-                menuePrices.push(menuePrice.textContent.trim());
-            });
-
-            weekplan[date] = [];
-            for(let i = 0; i < menueCategories.length; i++) {
-                const menue = {};
-                menue.category = menueCategories[i];
-                menue.description = menueDescriptions[i];
-                menue.price = menuePrices[i];
-                weekplan[date].push(menue);
-            }
-        });
-        //console.log(weekplan);
-        callback(); //ready
-    });
+function lunchCard(date, callback) {
+  const url = `${meals_url}/${date}/meals`;
+  console.log(url);
+  request(url, (error, response, body) => {
+    if (error || (response && response.statusCode !== 200)) {
+      console.log('error:', error);
+      console.log('response status:', response.status);
+    } else {
+      callback(JSON.parse(body));
+    }
+  });
 }
-
-function extractText(innerHtml) {
-    innerHtml = innerHtml.trim();
-    //console.log(innerHtml);
-    innerHtml = innerHtml.replace(supregexp, '');
-    innerHtml = innerHtml.replace(tagregexp, '$1');
-    //console.log(innerHtml);
-    return innerHtml;
-}
-
-function lunchCard(date) {
-    const dateParts = date.split('-');
-    const day = dateParts[2];
-    const month = dateParts[1];
-    const year = dateParts[0];
-    const dateAsString = day+ '.' + month + '.' + year;
-    //console.log(dateAsString, weekplan[dateAsString]);
-    return weekplan[dateAsString];
-}
-
