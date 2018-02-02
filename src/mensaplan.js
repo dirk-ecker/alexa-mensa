@@ -9,8 +9,9 @@ function lunchCard(date, callback) {
   console.log(url);
   request(url, (error, response, body) => {
     if (error || (response && response.statusCode !== 200)) {
-      console.log('error:', error);
-      console.log('response status:', response.status);
+        console.log('error', error);
+        console.log('response', response);
+        callback();
     } else {
       callback(JSON.parse(body));
     }
